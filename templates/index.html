@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Password Master</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+  </head>
+
+    <body>
+        <div>
+            <h3 class="display-3 text-center my-3">Password Manager</h3>
+        </div>
+
+<div class="container">
+        <!-- RESPONSIVE CLASSES -->
+    <div class="row">
+      <!-- stacks the columns on small screen sizes  -->
+      <div class="col-md-6">
+        <h3></h3>
+        <p></p>
+      </div>
+      <!--FORMS HERE-->
+      <div class="col-md-4">
+        <h3>Password Register</h3>
+          <!--FORMS HERE-->
+        <form method="POST" action="/add">
+        <label for="profile-url">Email</label>
+        <div class="input-group">
+            <input type="email" class="form-control" name="email" placeholder="Email">
+        </div>
+        <label for="profile-url">Site URL</label>
+        <div class="input-group">
+            <input type="text" class="form-control" name="site_url" placeholder="Site URL">
+        </div>
+        <label for="site_password">Password</label>
+        <div class="input-group">
+            <input type="password" class="form-control" name="site_password" id="profile-url">
+        </div>
+        <br>
+         <button type="submit" class="btn btn-primary mb-3">Add Password</button>
+        </form>
+          <!--FORMS HERE-->
+      
+      </div>
+      
+    </div>
+        
+
+
+  <div class="container">
+            <table class="table">
+            <!-- gives only the heading a black background -->
+            <thead class="thead-inverse">
+        <tr>
+            <th>Email</th>
+            <th>Site Address</th>
+            <th>Site Password</th>
+            <th>Actions</th>
+            <th>Visibility</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for task in passwordlist %}
+            <tr>
+                <td>{{ task.email }}</td>
+                <td>{{ task.site_url }}</td>
+                <td><input type="password" value="{{ task.site_password }}" id="{{ task.id}}"></td>
+                <td>
+                    <a class="btn btn-outline-danger btn-sm" role="button" href="/delete/{{task.id}}">Delete</a>
+                    <br>
+                    <a class="btn btn-outline-success btn-sm" role="button" href="/update/{{task.id}}">Update</a>
+                   </td>
+                <td>
+                    <input type="checkbox" onclick="myFunction({{ task.id}})">Show Password
+                </td>
+            </tr>
+    </tbody>
+        {% endfor %}
+    </table>
+  </div>
+  <div class="container">
+       <a href="{{url_for('export_data')}}" type="button" class="btn btn-primary mb-3">Export as CSV</a>
+  </div>
+</div>
+
+    <script>
+function myFunction(pid) {
+  var x = document.getElementById(pid);
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+    </body>
+</html>
