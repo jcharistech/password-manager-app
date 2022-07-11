@@ -1,8 +1,10 @@
-from flask import Blueprint,render_template,url_for,redirect,request
+from flask import Blueprint,render_template,url_for,redirect,request,flash
 from .models import User
 from .extensions import db
+
+# Essentials For Login Creation
 from werkzeug.security import generate_password_hash,check_password_hash
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 
 auth = Blueprint("auth",__name__)
 
@@ -15,10 +17,12 @@ def login():
 @auth.route("/login",methods=["POST"])
 def login_post():
 	if request.method == "POST":
+		# Get values from Form
 		email = request.form.get("email")
 		name = request.form.get("name")
 		password = request.form.get("password")
 		remember = request.form.get("remember")
+
 		# if it returns a user then email already exist and user exist hence check for password
 		user = User.query.filter_by(email=email).first()
 
@@ -37,9 +41,11 @@ def signup():
 
 @auth.route("/signup",methods=["POST"])
 def signup_post():
+	# Get values from form
 	email = request.form.get("email")
 	name = request.form.get("name")
 	password = request.form.get("password")
+
 	# if it returns a user then email already exist hence redirect
 	user = User.query.filter_by(email=email).first()
 	if user:
@@ -56,9 +62,11 @@ def signup_post():
 	return redirect(url_for("auth.login"))
 
 
-@auth.route("/logout")
+@auth.route('/logout')
+@login_required
 def logout():
-	return "Login"
+    logout_user()
+    return redirect(url_for('home_page'))
 
 
 

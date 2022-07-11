@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-{% extends "base.html" %}
-
-{% block content %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Password Manager</title>
+</head>
 <body>
 	<div class="container">
         <!-- RESPONSIVE CLASSES -->
@@ -12,17 +15,17 @@
         <p></p>
       </div>
       {% with messages = get_flashed_messages() %}
-{% if messages %}
-    <div class="notification is-danger">
-        {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
-    </div>
-{% endif %}
-{% endwith %}
+		{% if messages %}
+		    <div class="notification is-danger">
+		        {{ messages[0] }}
+		    </div>
+		{% endif %}
+		{% endwith %}
       <!--FORMS HERE-->
       <div class="col-md-4">
-        <h3>Sign Up</h3>
+        <h3>Login</h3>
           <!--FORMS HERE-->
-        <form method="POST" action="{{url_for('auth.signup_post')}}">
+        <form method="POST" action="{{url_for('auth.login_post')}}">
         <label for="profile-email">Email</label>
         <div class="input-group">
             <input type="email" class="form-control" name="email" placeholder="Email">
@@ -35,6 +38,10 @@
         <div class="input-group">
             <input type="password" class="form-control" name="password" id="profile-password">
         </div>
+        <label for="profile_remember">Remember</label>
+        <div class="input-group">
+            <input type="checkbox" class="form-control" name="remember" id="profile-password" value="True">
+        </div>
         <br>
          <button type="submit" class="btn btn-primary mb-3">Sign Up</button>
         </form>
@@ -44,4 +51,5 @@
       
     </div>
 
-{% endblock %}
+</body>
+</html>
