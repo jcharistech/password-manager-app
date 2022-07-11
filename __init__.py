@@ -23,12 +23,19 @@ def create_app():
     def load_user(user_id):
         # using the user id as primary key as id for session
         return User.query.get(int(user_id))
-
+        
+    @login_required
     @app.route("/")
     def index():
         passwordlist = PasswordManager.query.all()
         return render_template('index.html', passwordlist=passwordlist)    
 
+    @app.route("/Home")
+    def home_page():
+        passwordlist = PasswordManager.query.all()
+        return render_template('home.html', passwordlist=passwordlist)    
+
+    @login_required
     @app.route("/add",methods=["GET","POST"])
     def add_password():
         if request.method == 'POST':
@@ -41,7 +48,7 @@ def create_app():
             flash("Password Added")
             return redirect('/')
            
-
+    @login_required
     @app.route('/delete/<int:id>')
     def delete(id):
         new_password_to_delete = PasswordManager.query.get_or_404(id)
