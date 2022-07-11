@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Password Manager</title>
+</head>
+<body>
+	<div class="container">
+        <!-- RESPONSIVE CLASSES -->
+    <div class="row">
+      <!-- stacks the columns on small screen sizes  -->
+      <div class="col-md-6">
+        <h3></h3>
+        <p></p>
+      </div>
+      {% with messages = get_flashed_messages() %}
+{% if messages %}
+    <div class="notification is-danger">
+        {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+    </div>
+{% endif %}
+{% endwith %}
+      <!--FORMS HERE-->
+      <div class="col-md-4">
+        <h3>Sign Up</h3>
+          <!--FORMS HERE-->
+        <form method="POST" action="{{url_for('auth.signup_post')}}">
+        <label for="profile-email">Email</label>
+        <div class="input-group">
+            <input type="email" class="form-control" name="email" placeholder="Email">
+        </div>
+        <label for="profile-name">Name</label>
+        <div class="input-group">
+            <input type="text" class="form-control" name="name" placeholder="User Name">
+        </div>
+        <label for="profile_password">Password</label>
+        <div class="input-group">
+            <input type="password" class="form-control" name="password" id="profile-password">
+        </div>
+        <br>
+         <button type="submit" class="btn btn-primary mb-3">Sign Up</button>
+        </form>
+          <!--FORMS HERE-->
+      
+      </div>
+      
+    </div>
+
+</body>
+</html>
